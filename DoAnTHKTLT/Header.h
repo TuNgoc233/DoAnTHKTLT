@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
+#include <string>
 using namespace std;
 
 //// Khai báo các stack để lưu trữ lịch sử các lệnh đã thực hiện và đã phục hồi
