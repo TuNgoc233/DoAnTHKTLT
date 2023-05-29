@@ -196,7 +196,63 @@ void insertAt(node& head, node& tail, int x, int pos) {
 	}
 }
 
-// Hàm thực hiện lệnh undo
+//Dao nguoc danh sach
+void Reverse(node& head, node& tail)
+{
+	if (head == NULL) return;
+	if (head == tail) return;
+	node previous = NULL;
+	node current = head;
+	node next = NULL;
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = previous;
+		previous = current;
+		current = next;
+	}
+	head = previous;
+}
+
+//Sap xep danh sach theo thu tu tang dan
+void Sort(node& head)
+{
+	node i;
+	for (i = head;i;i = i->next)
+	{
+		node min = i;
+		for (node j = i->next;j;j = j->next)
+			if (min->data > j->data)
+				min = j;
+		int temp = min->data;
+		min->data = i->data;
+		i->data = temp;
+	}
+}
+
+//Xoa cac phan tu trung nhau trong danh sach
+void RemoveDuplicates(node head)
+{
+	node i = head;
+	node j, q;
+	while (i != NULL && i->next != NULL)
+	{
+		j = i;
+		while (j->next != NULL)
+		{
+			if (i->data == j->next->data)
+			{
+				q = j->next;
+				j->next = j->next->next;
+				delete q;
+			}
+			else j = j->next;
+		}
+		i = i->next;
+	}
+}
+
+/*// Hàm thực hiện lệnh undo
 void undo() {
 	if (!command_history.empty()) {
 		std::string command = command_history.top(); // Lấy lệnh cuối cùng từ stack command_history

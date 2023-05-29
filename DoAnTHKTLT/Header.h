@@ -2,13 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
-#include <vector>
 #include <string>
 using namespace std;
 
-// Khai báo các stack để lưu trữ lịch sử các lệnh đã thực hiện và đã phục hồi
-std::stack<std::string> command_history;
-std::stack<std::string> undo_history;
+//// Khai báo các stack để lưu trữ lịch sử các lệnh đã thực hiện và đã phục hồi
+//std::stack<std::string> command_history;
+//std::stack<std::string> undo_history;
 
 struct Node {
 	int data;
@@ -44,5 +43,9 @@ void insertAfter(node q, int k);
 void insertBefore(node q, int k);
 //Chen 1 node co gia tri x tai mot vi tri xac dinh trong danh sach
 void insertAt(node& head, node& tail, int x, int pos);
-// Hàm thực hiện lệnh undo
-void undo();
+//Dao nguoc danh sach
+void Reverse(node& head, node& tail);
+//Sap xep danh sach theo thu tu tang dan
+void Sort(node& head);
+//Xoa cac phan tu trung nhau trong danh sach
+void RemoveDuplicates(node head);
