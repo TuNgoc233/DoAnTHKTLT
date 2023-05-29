@@ -13,13 +13,17 @@ int main() {
 			deleteAt(phead, ptail, pos);
 			Output_List(phead);
 		}
-		if (chose == 2) {
+		else if (chose == 2) {
 			int pos, x;
 			cin >> pos;
 			cin >> x;
 			insertAt(phead, ptail, x, pos);
 			Output_List(phead);
 		}
+		else if (chose == 3) {
+			undo();
+		}
+
 	}
 	return 0;
 }

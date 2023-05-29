@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
+#include <vector>
+#include <string>
 using namespace std;
 
 // Khai báo các stack để lưu trữ lịch sử các lệnh đã thực hiện và đã phục hồi
@@ -42,3 +44,5 @@ void insertAfter(node q, int k);
 void insertBefore(node q, int k);
 //Chen 1 node co gia tri x tai mot vi tri xac dinh trong danh sach
 void insertAt(node& head, node& tail, int x, int pos);
+// Hàm thực hiện lệnh undo
+void undo();

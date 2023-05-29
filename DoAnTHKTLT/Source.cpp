@@ -196,7 +196,7 @@ void insertAt(node& head, node& tail, int x, int pos) {
 	}
 }
 
-/*// Hàm thực hiện lệnh undo
+// Hàm thực hiện lệnh undo
 void undo() {
 	if (!command_history.empty()) {
 		std::string command = command_history.top(); // Lấy lệnh cuối cùng từ stack command_history
@@ -214,4 +214,66 @@ void redo() {
 		command_history.push(command); // Di chuyển lệnh vào stack command_history
 		execute_command(command); // Thực hiện lệnh
 	}
-} */
+} 
+
+// Hàm thực hiện lệnh
+void execute_command(std::string command, std::vector<int>& sequence) {
+	std::stringstream ss(command);
+	std::string operation;
+	ss >> operation;
+
+	if (operation == "delete") {
+		int pos;
+		ss >> pos;
+		if (pos >= 1 && pos <= sequence.size()) {
+			sequence.erase(sequence.begin() + pos - 1); // Xóa node tại vị trí pos trong danh sách
+		}
+		else {
+			std::cout << "Invalid position.\n";
+		}
+	}
+	else if (operation == "insert") {
+		int pos, val;
+		ss >> pos >> val;
+		if (pos >= 1 && pos <= sequence.size() + 1) {
+			sequence.insert(sequence.begin() + pos - 1, val); // Chèn node có giá trị val vào vị trí pos trong danh sách
+		}
+		else {
+			std::cout << "Invalid position.\n";
+		}
+	}
+	else {
+		std::cout << "Invalid command.\n";
+	}
+}
+
+// Hàm thực hiện lệnh đảo ngược
+void execute_reverse_command(std::string command, std::vector<int>& sequence) {
+	std::stringstream ss(command);
+	std::string operation;
+	ss >> operation;
+
+	if (operation == "delete") {
+		int pos, val;
+		ss >> pos >> val;
+		if (pos >= 1 && pos <= sequence.size() + 1) {
+			sequence.insert(sequence.begin() + pos - 1, val); // Chèn node có giá trị val vào vị trí pos trong danh sách
+		}
+		else {
+			std::cout << "Invalid position.\n";
+		}
+	}
+	else if (operation == "insert") {
+		int pos;
+		ss >> pos;
+		if (pos >= 1 && pos <= sequence.size()) {
+			sequence.erase(sequence.begin() + pos - 1); // Xóa node tại vị trí pos trong danh sách
+		}
+		else {
+			std::cout << "Invalid position.\n";
+		}
+	}
+	else {
+		std::cout << "Invalid command.\n";
+	}
+}
