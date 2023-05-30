@@ -1,6 +1,8 @@
 #include "Header.h"
 
 int main() {
+	stack<string> command_history;
+	stack<string> undo_history;
 	node phead = NULL, ptail = NULL;
 	string cmd;
 	ReadFile(phead, ptail);
