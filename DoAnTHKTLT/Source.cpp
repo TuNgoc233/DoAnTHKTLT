@@ -231,7 +231,7 @@ void Sort(node& head)
 }
 
 //Xoa cac phan tu trung nhau trong danh sach
-void RemoveDuplicates(node head)
+void RemoveDuplicates(node& head)
 {
 	node i = head;
 	node j, q;
@@ -252,23 +252,22 @@ void RemoveDuplicates(node head)
 	}
 }
 
-/*// Hàm thực hiện lệnh undo
-void undo() {
-	if (!command_history.empty()) {
-		std::string command = command_history.top(); // Lấy lệnh cuối cùng từ stack command_history
-		command_history.pop(); // Xóa lệnh đã lấy ra
-		undo_history.push(command); // Di chuyển lệnh vào stack undo_history
-		execute_reverse_command(command); // Thực hiện lệnh đảo ngược
-	}
-}
-
-// Hàm thực hiện lệnh redo
-void redo() {
-	if (!undo_history.empty()) {
-		std::string command = undo_history.top(); // Lấy lệnh cuối cùng từ stack undo_history
-		undo_history.pop(); // Xóa lệnh đã lấy ra
-		command_history.push(command); // Di chuyển lệnh vào stack command_history
-		execute_command(command); // Thực hiện lệnh
-	}
-} 
-
+///*// Hàm thực hiện lệnh undo
+//void undo() {
+//	if (!command_history.empty()) {
+//		std::string command = command_history.top(); // Lấy lệnh cuối cùng từ stack command_history
+//		command_history.pop(); // Xóa lệnh đã lấy ra
+//		undo_history.push(command); // Di chuyển lệnh vào stack undo_history
+//		execute_reverse_command(command); // Thực hiện lệnh đảo ngược
+//	}
+//}
+//
+//// Hàm thực hiện lệnh redo
+//void redo() {
+//	if (!undo_history.empty()) {
+//		std::string command = undo_history.top(); // Lấy lệnh cuối cùng từ stack undo_history
+//		undo_history.pop(); // Xóa lệnh đã lấy ra
+//		command_history.push(command); // Di chuyển lệnh vào stack command_history
+//		execute_command(command); // Thực hiện lệnh
+//	}
+//} 
