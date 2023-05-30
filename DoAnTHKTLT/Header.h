@@ -8,8 +8,8 @@
 using namespace std;
 
 //Khai báo các stack để lưu trữ lịch sử các lệnh đã thực hiện và đã phục hồi
-stack<string> command_history;
-stack<string> undo_history;
+//stack<string> command_history;
+//stack<string> undo_history;
 
 struct Node {
 	int data;

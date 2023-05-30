@@ -252,7 +252,7 @@ void RemoveDuplicates(node head)
 	}
 }
 
-// Hàm thực hiện lệnh undo
+/*// Hàm thực hiện lệnh undo
 void undo() {
 	if (!command_history.empty()) {
 		vector<int> sequence;
@@ -326,5 +326,5 @@ void execute_reverse_command(string command, vector<int>& sequence) {
     } else {
         cout << "Invalid command.\n";
     }
-}
+} */
 

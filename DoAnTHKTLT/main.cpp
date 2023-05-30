@@ -62,12 +62,12 @@ int main() {
 		if (cmd == "quit") {
 			break;
 		}
-		if (cmd == "undo") {
+		/*if (cmd == "undo") {
 			undo();
 		}
 		if (cmd == "redo") {
 			redo();
-		}
+		}*/
 		/*int chose;
 		cin >> chose;
 		if (chose == 1) {
