@@ -14,8 +14,20 @@ int main() {
 			getline(cin, cmd);
 		}
 		if (cmd.substr(0, 6) == "delete") {
+			while (cmd.size() == 7) {
+				cout << "command is *delete position*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
 			string s1 = cmd.substr(7);
 			int x = stoi(s1);
+			int i;
+			node q;
+			for (i = 1, q = phead; i < x; i++, q = q->next);
+			int val = q->data;
+			string str = "delete " + to_string(x) + " " + to_string(val);
+			command_history.push(str);
+			undo_history.push(cmd);
 			deleteAt(phead, ptail, x-1);
 			Output_List(phead);
 		}
@@ -37,8 +49,12 @@ int main() {
 			cout << "Command > ";
 			getline(cin, cmd);
 		}
-
 		if (cmd.substr(0, 6) == "insert") {
+			while (cmd.size() == 7) {
+				cout << "command is *insert position value*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
 			int dodai1 = 0;
 			for (int i = 7; i <cmd.length(); i++) {
 				if (cmd[i] == ' ') {
@@ -46,12 +62,20 @@ int main() {
 					break;
 				}
 			}
+			while (cmd.size() == 7 + dodai1 + 1) {
+				cout << "command is *insert position value*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
 			string s1 = cmd.substr(7, dodai1);
 			int x = stoi(s1);
 			int dodai2 = 0;
 			dodai2 = cmd.size() - 9;
 			string s2 = cmd.substr(9, dodai2);
 			int y = stoi(s2);
+			string s = "insert " + to_string(x);
+			command_history.push(s);
+			undo_history.push(cmd);
 			insertAt(phead, ptail, y, x-1);
 			Output_List(phead);
 		}
@@ -62,12 +86,14 @@ int main() {
 		if (cmd == "quit") {
 			break;
 		}
-		/*if (cmd == "undo") {
-			undo();
+		if (cmd == "undo") {
+			undo(phead, ptail, command_history,undo_history);
+			Output_List(phead);
 		}
 		if (cmd == "redo") {
-			redo();
-		}*/
+			redo(phead, ptail, command_history, undo_history);
+			Output_List(phead);
+		}
 		/*int chose;
 		cin >> chose;
 		if (chose == 1) {
