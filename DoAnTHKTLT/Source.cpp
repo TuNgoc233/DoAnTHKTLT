@@ -231,7 +231,7 @@ void Sort(node& head)
 }
 
 //Xoa cac phan tu trung nhau trong danh sach
-void RemoveDuplicates(node head)
+void RemoveDuplicates(node& head)
 {
 	node i = head;
 	node j, q;
