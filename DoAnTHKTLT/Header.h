@@ -53,11 +53,11 @@ void Sort(node& head);
 void RemoveDuplicates(node head);
 //Luu danh sach vao file output.txt
 void Save_List(node head);
-// Hàm thực hiện lệnh undo
-void undo();
 // Hàm thực hiện lệnh redo
-void redo();
+void redo(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history);
+// Hàm thực hiện lệnh undo
+void undo(node & head, node & tail, stack<string>& command_history, stack<string>& undo_history);
 // Hàm thực hiện lệnh
-void execute_command(string command, vector<int>& sequence);
+void execute_command(string command, node&head, node&tail);
 // Hàm thực hiện lệnh đảo ngược
-void execute_reverse_command(string command, vector<int>& sequence);
+void execute_reverse_command(string command, node&head, node&tail);
