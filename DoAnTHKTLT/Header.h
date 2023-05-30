@@ -49,3 +49,5 @@ void Reverse(node& head, node& tail);
 void Sort(node& head);
 //Xoa cac phan tu trung nhau trong danh sach
 void RemoveDuplicates(node& head);
+//Luu danh sach vao file output.txt
+void Save_List(node head);
