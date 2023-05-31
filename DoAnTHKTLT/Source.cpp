@@ -218,7 +218,7 @@ void Reverse(node& head)
 	}
 	node p, q, prev_p = NULL;
 
-	// sap xep danh sanh bang thuat toan sap xep 
+	// sap xep danh sach bang thuat toan sap xep 
 	for (p = head; p != NULL; p = p->next) {
 		for (q = p->next; q != NULL; prev_p = q, q = q->next) {
 			int tmp = p->data;
@@ -232,16 +232,20 @@ void Reverse(node& head)
 //Sap xep danh sach theo thu tu tang dan
 void Sort(node& head)
 {
-	node i;
-	for (i = head;i;i = i->next)
-	{
-		node min = i;
-		for (node j = i->next;j;j = j->next)
-			if (min->data > j->data)
-				min = j;
-		int temp = min->data;
-		min->data = i->data;
-		i->data = temp;
+	if (head == NULL || head->next == NULL) {
+		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
+	}
+	node p, q, prev_p = NULL;
+
+	// sap xep danh sach bang thuat toan sap xep 
+	for (p = head; p != NULL; p = p->next) {
+		for (q = p->next; q != NULL; prev_p = q, q = q->next) {
+			if (p->data > q->data) {
+				int tmp = p->data;
+				p->data = q->data;
+				q->data = tmp;
+			}
+		}
 	}
 }
 
