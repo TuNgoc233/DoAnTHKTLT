@@ -57,3 +57,9 @@ void undo(node & head, node & tail, stack<string>& command_history, stack<string
 void execute_command(string command, node&head, node&tail);
 // Hàm thực hiện lệnh đảo ngược
 void execute_reverse_command(string command, node&head, node&tail);
+// Huy danh sach lien ket
+void DestroyList(node& head);
+// Hàm thực hiện lệnh reset
+void Reset(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history);
+// Hàm thực hiện lệnh quit
+void Quit(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history);
