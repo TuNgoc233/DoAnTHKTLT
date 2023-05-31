@@ -235,11 +235,11 @@ void Sort(node& head)
 	if (head == NULL || head->next == NULL) {
 		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
 	}
-	node p, q, prev_p = NULL;
+	node p, q= NULL;
 
 	// sap xep danh sach bang thuat toan sap xep 
 	for (p = head; p != NULL; p = p->next) {
-		for (q = p->next; q != NULL; prev_p = q, q = q->next) {
+		for (q = p->next; q != NULL; q = q->next) {
 			if (p->data > q->data) {
 				int tmp = p->data;
 				p->data = q->data;
@@ -377,3 +377,35 @@ void execute_reverse_command(string command, node&head, node&tail) {
     }
 } 
 
+void DestroyList(node& head)
+{
+	node p;
+	if (head == NULL) return;
+	while (head)
+	{
+		p = head;
+		head = head->next;
+		delete p;
+	}
+}
+
+void Reset(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history)
+{
+	DestroyList(head);
+	while (!command_history.empty())
+		command_history.pop();
+	while (!undo_history.empty())
+		undo_history.pop();
+	ReadFile(head, tail);
+	Output_List(head);
+}
+
+void Quit(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history)
+{
+	Save_List(head);
+	DestroyList(head);
+	while (!command_history.empty())
+		command_history.pop();
+	while (!undo_history.empty())
+		undo_history.pop();
+}

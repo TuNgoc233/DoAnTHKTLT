@@ -123,6 +123,7 @@ int main() {
 			cout << "Numbers have been stored." << endl;
 		}
 		if (cmd == "quit") {
+			Quit(phead, ptail, command_history, undo_history);
 			break;
 		}
 		if (cmd == "undo") {
@@ -132,6 +133,9 @@ int main() {
 		if (cmd == "redo") {
 			redo(phead, ptail, command_history, undo_history);
 			Output_List(phead);
+		}
+		if (cmd == "reset") {
+			Reset(phead, ptail, command_history, undo_history);
 		}
 	}
 	return 0;
