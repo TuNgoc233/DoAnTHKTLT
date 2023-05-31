@@ -1,5 +1,6 @@
 ﻿#include "Header.h"
 
+
 //Khoi tao
 void Init(node& head, node& tail) {
 	head = tail = NULL;
@@ -252,79 +253,98 @@ void RemoveDuplicates(node& head)
 	}
 }
 
-/*// Hàm thực hiện lệnh undo
-void undo() {
+// Hàm thực hiện lệnh undo
+void undo(node&head, node&tail, stack<string>& command_history,stack<string>& undo_history) {
 	if (!command_history.empty()) {
-		vector<int> sequence;
 		string command = command_history.top(); // Lấy lệnh cuối cùng từ stack command_history
 		command_history.pop(); // Xóa lệnh đã lấy ra
 		undo_history.push(command); // Di chuyển lệnh vào stack undo_history
-		execute_reverse_command(command, sequence); // Thực hiện lệnh đảo ngược
+		execute_reverse_command(command, head, tail); // Thực hiện lệnh đảo ngược
 	}
 }
 
 // Hàm thực hiện lệnh redo
-void redo() {
+void redo(node&head, node&tail, stack<string>& command_history, stack<string>& undo_history) {
 	if (!undo_history.empty()) {
-		vector<int> sequence;
 		string command = undo_history.top(); // Lấy lệnh cuối cùng từ stack undo_history
 		undo_history.pop(); // Xóa lệnh đã lấy ra
 		command_history.push(command); // Di chuyển lệnh vào stack command_history
-		execute_command(command, sequence); // Thực hiện lệnh
+		execute_command(command, head, tail); // Thực hiện lệnh
 	}
 } 
 
 // Hàm thực hiện lệnh
-void execute_command(string command, vector<int>& sequence) {
+void execute_command(string command, node&head, node&tail) {
     stringstream ss(command);
     string operation;
     ss >> operation;
-
     if (operation == "delete") {
         int pos;
         ss >> pos;
-        if (pos >= 1 && pos <= sequence.size()) {
-            sequence.erase(sequence.begin() + pos - 1); // Xóa node tại vị trí pos trong danh sách
-        } else {
-            cout << "Invalid position.\n";
-        }
+		deleteAt(head, tail, pos-1);
     } else if (operation == "insert") {
         int pos, val;
         ss >> pos >> val;
-        if (pos >= 1 && pos <= sequence.size() + 1) {
-            sequence.insert(sequence.begin() + pos - 1, val); // Chèn node có giá trị val vào vị trí pos trong danh sách
-        } else {
-            cout << "Invalid position.\n";
-        }
-    } else {
+		insertAt(head, tail, val, pos-1);
+    } 
+	else if (operation == "sort") {
+		Sort(head);
+	}
+	else if (operation == "reverse") {
+
+		Reverse(head, tail);
+	}
+	else if (operation == "removeduplicates") {
+		RemoveDuplicates(head);
+	}
+	else {
         cout << "Invalid command.\n";
     }
 }
 
 // Hàm thực hiện lệnh đảo ngược
-void execute_reverse_command(string command, vector<int>& sequence) {
+void execute_reverse_command(string command, node&head, node&tail) {
     stringstream ss(command);
     string operation;
     ss >> operation;
-
     if (operation == "delete") {
         int pos, val;
         ss >> pos >> val;
-        if (pos >= 1 && pos <= sequence.size() + 1) {
-            sequence.insert(sequence.begin() + pos - 1, val); // Chèn node có giá trị val vào vị trí pos trong danh sách
-        } else {
-            cout << "Invalid position.\n";
-        }
+		insertAt(head, tail, val, pos-1);
     } else if (operation == "insert") {
         int pos;
         ss >> pos;
-        if (pos >= 1 && pos <= sequence.size()) {
-            sequence.erase(sequence.begin() + pos - 1); // Xóa node tại vị trí pos trong danh sách
-        } else {
-            cout << "Invalid position.\n";
-        }
-    } else {
+		deleteAt(head, tail, pos-1);
+    }
+	else if (operation == "sort") {
+		node p = head;			
+		while (p != NULL) {
+			while (ss >> operation) {
+				p->data = stoi(operation);
+				p = p->next;
+			}
+		}
+	}
+	else if (operation == "reverse") {
+		node p = head;
+		while (p != NULL) {
+			while (ss >> operation) {
+				p->data = stoi(operation);
+				p = p->next;
+			}
+		}
+	}
+	else if (operation == "removeduplicates") {
+		node p = head;
+		while (p != NULL) {
+			while (ss >> operation) {
+				p->data = stoi(operation);
+				p = p->next;
+			}
+		}
+	}
+	else {
         cout << "Invalid command.\n";
     }
-} */
+} 
 

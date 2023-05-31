@@ -1,6 +1,8 @@
 #include "Header.h"
 
 int main() {
+	stack<string> command_history;
+	stack<string> undo_history;
 	node phead = NULL, ptail = NULL;
 	string cmd;
 	ReadFile(phead, ptail);
@@ -14,21 +16,71 @@ int main() {
 			getline(cin, cmd);
 		}
 		if (cmd.substr(0, 6) == "delete") {
+			while (cmd.size() == 7) {
+				cout << "command is *delete position*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
 			string s1 = cmd.substr(7);
 			int x = stoi(s1);
+			int i;
+			node q;
+			for (i = 1, q = phead; i < x; i++, q = q->next);
+			int val = q->data;
+			string str = "delete " + to_string(x) + " " + to_string(val);
+			command_history.push(str);
 			deleteAt(phead, ptail, x-1);
 			Output_List(phead);
 		}
-
 		if(cmd=="sort") {
+			node p = phead;
+			string str1 = "sort";
+			while (p != NULL)
+			{
+				str1 += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str1);
+			//undo_history.push(str1);
 			Sort(phead);
 			Output_List(phead);
+			/*p = phead;
+			string str2 = "sort";
+			while (p != NULL)
+			{
+				str2 += " " + to_string(p->data);
+				p = p->next;
+			}*/
 		}
 		if(cmd=="reverse") {
+			node p = phead;
+			string str1 = "reverse";
+			while (p != NULL)
+			{
+				str1 += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str1);
 			Reverse(phead,ptail);
 			Output_List(phead);
+			/*p = phead;
+			string str2 = "reverse";
+			while (p != NULL)
+			{
+				str2 += " " + to_string(p->data);
+				p = p->next;
+			}
+			undo_history.push(str2);*/
 		}
 		if(cmd=="remove duplicates") {
+			node p = phead;
+			string str1 = "removeduplicates";
+			while (p != NULL)
+			{
+				str1 += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str1);
 			RemoveDuplicates(phead);
 			Output_List(phead);
 		}
@@ -37,8 +89,12 @@ int main() {
 			cout << "Command > ";
 			getline(cin, cmd);
 		}
-
 		if (cmd.substr(0, 6) == "insert") {
+			while (cmd.size() == 7) {
+				cout << "command is *insert position value*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
 			int dodai1 = 0;
 			for (int i = 7; i <cmd.length(); i++) {
 				if (cmd[i] == ' ') {
@@ -46,12 +102,19 @@ int main() {
 					break;
 				}
 			}
+			while (cmd.size() == 7 + dodai1 + 1) {
+				cout << "command is *insert position value*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
 			string s1 = cmd.substr(7, dodai1);
 			int x = stoi(s1);
 			int dodai2 = 0;
 			dodai2 = cmd.size() - 9;
 			string s2 = cmd.substr(9, dodai2);
 			int y = stoi(s2);
+			string s = "insert " + to_string(x) + " " + to_string(y);
+			command_history.push(s);
 			insertAt(phead, ptail, y, x-1);
 			Output_List(phead);
 		}
@@ -62,40 +125,14 @@ int main() {
 		if (cmd == "quit") {
 			break;
 		}
-		/*if (cmd == "undo") {
-			undo();
+		if (cmd == "undo") {
+			undo(phead, ptail, command_history,undo_history);
+			Output_List(phead);
 		}
 		if (cmd == "redo") {
-			redo();
-		}*/
-		/*int chose;
-		cin >> chose;
-		if (chose == 1) {
-			int pos;
-			cin >> pos;
-			deleteAt(phead, ptail, pos);
+			redo(phead, ptail, command_history, undo_history);
 			Output_List(phead);
 		}
-		else if (chose == 2) {
-			int pos, x;
-			cin >> pos;
-			cin >> x;
-			insertAt(phead, ptail, x, pos);
-			Output_List(phead);
-		}
-		if (chose == 3) {
-			Reverse(phead,ptail);
-			Output_List(phead);
-		}
-		if (chose == 4) {
-			Sort(phead);
-			Output_List(phead);
-		}
-		if (chose == 5) {
-			RemoveDuplicates(phead);
-			Output_List(phead);
-		}*/
-
 	}
 	return 0;
 }

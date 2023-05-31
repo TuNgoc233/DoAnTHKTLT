@@ -7,10 +7,6 @@
 #include <sstream>
 using namespace std;
 
-//Khai báo các stack để lưu trữ lịch sử các lệnh đã thực hiện và đã phục hồi
-//stack<string> command_history;
-//stack<string> undo_history;
-
 struct Node {
 	int data;
 	Node* next;
@@ -50,14 +46,14 @@ void Reverse(node& head, node& tail);
 //Sap xep danh sach theo thu tu tang dan
 void Sort(node& head);
 //Xoa cac phan tu trung nhau trong danh sach
-void RemoveDuplicates(node head);
+void RemoveDuplicates(node& head);
 //Luu danh sach vao file output.txt
 void Save_List(node head);
-// Hàm thực hiện lệnh undo
-void undo();
 // Hàm thực hiện lệnh redo
-void redo();
+void redo(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history);
+// Hàm thực hiện lệnh undo
+void undo(node & head, node & tail, stack<string>& command_history, stack<string>& undo_history);
 // Hàm thực hiện lệnh
-void execute_command(string command, vector<int>& sequence);
+void execute_command(string command, node&head, node&tail);
 // Hàm thực hiện lệnh đảo ngược
-void execute_reverse_command(string command, vector<int>& sequence);
+void execute_reverse_command(string command, node&head, node&tail);
