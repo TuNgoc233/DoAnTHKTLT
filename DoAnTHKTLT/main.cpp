@@ -10,7 +10,7 @@ int main() {
 	while (true) {
 		cout << "Command > ";
 		getline(cin,cmd);
-		while(cmd == "delete") {
+		while (cmd == "delete") {
 			cout << "command is *delete position*\n";
 			cout << "Command > ";
 			getline(cin, cmd);
@@ -23,65 +23,15 @@ int main() {
 			}
 			string s1 = cmd.substr(7);
 			int x = stoi(s1);
-			int i;
-			node q;
-			for (i = 1, q = phead; i < x; i++, q = q->next);
-			int val = q->data;
-			string str = "delete " + to_string(x) + " " + to_string(val);
-			command_history.push(str);
-			deleteAt(phead, ptail, x-1);
+			deleteAt(phead, ptail, x-1, cmd, command_history);
 			Output_List(phead);
 		}
 		if(cmd=="sort") {
-			node p = phead;
-			string str1 = "sort";
-			while (p != NULL)
-			{
-				str1 += " " + to_string(p->data);
-				p = p->next;
-			}
-			command_history.push(str1);
-			//undo_history.push(str1);
-			Sort(phead);
+			Sort(phead, cmd, command_history);
 			Output_List(phead);
-			/*p = phead;
-			string str2 = "sort";
-			while (p != NULL)
-			{
-				str2 += " " + to_string(p->data);
-				p = p->next;
-			}*/
 		}
 		if(cmd=="reverse") {
-			node p = phead;
-			string str1 = "reverse";
-			while (p != NULL)
-			{
-				str1 += " " + to_string(p->data);
-				p = p->next;
-			}
-			command_history.push(str1);
-			Reverse(phead);
-			Output_List(phead);
-			/*p = phead;
-			string str2 = "reverse";
-			while (p != NULL)
-			{
-				str2 += " " + to_string(p->data);
-				p = p->next;
-			}
-			undo_history.push(str2);*/
-		}
-		if(cmd=="remove duplicates") {
-			node p = phead;
-			string str1 = "removeduplicates";
-			while (p != NULL)
-			{
-				str1 += " " + to_string(p->data);
-				p = p->next;
-			}
-			command_history.push(str1);
-			RemoveDuplicates(phead);
+			Reverse(phead, cmd, command_history);
 			Output_List(phead);
 		}
 		while (cmd == "insert") {
@@ -113,9 +63,7 @@ int main() {
 			dodai2 = cmd.size() - 9;
 			string s2 = cmd.substr(9, dodai2);
 			int y = stoi(s2);
-			string s = "insert " + to_string(x) + " " + to_string(y);
-			command_history.push(s);
-			insertAt(phead, ptail, y, x-1);
+			insertAt(phead, ptail, y, x-1, cmd, command_history);
 			Output_List(phead);
 		}
 		if (cmd == "save") {

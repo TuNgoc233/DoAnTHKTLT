@@ -108,7 +108,13 @@ void deleteMid(node& head, node q) {
 }
 
 //Xoa phan tu tai 1 vi tri xac dinh
-void deleteAt(node& head, node& tail, int pos) {
+void deleteAt(node& head, node& tail, int pos, string command, stack<string>& command_history) {
+	int i;
+	node q;
+	for (i = 1, q = head; i <= pos; i++, q = q->next);
+	int val = q->data;
+	string str = "delete " + to_string(pos+1) + " " + to_string(val);
+	command_history.push(str);
 	int n = 0;
 	n = Size(head);
 	if ((pos < 0) || (pos >= n)) {
@@ -175,7 +181,9 @@ void insertBefore(node q, int k) {
 }
 
 //Chen 1 node co gia tri x tai mot vi tri xac dinh trong danh sach
-void insertAt(node& head, node& tail, int x, int pos) {
+void insertAt(node& head, node& tail, int x, int pos, string command, stack<string>& command_history) {
+	string s = "insert " + to_string(pos+1) + " " + to_string(x);
+	command_history.push(s);
 	int n = Size(head);
 	if (pos < 0 || pos > n) {
 		cout << "Vi tri chen khong hop le!" << endl;
@@ -198,21 +206,16 @@ void insertAt(node& head, node& tail, int x, int pos) {
 }
 
 //Dao nguoc danh sach
-void Reverse(node& head)
+void Reverse(node& head, string command, stack<string>& command_history)
 {
-	/*if (head == NULL) return;
-	if (head == tail) return;
-	node previous = NULL;
-	node current = head;
-	node next = NULL;
-	while (current != NULL)
+	node p1 = head;
+	string str1 = "reverse";
+	while (p1 != NULL)
 	{
-		next = current->next;
-		current->next = previous;
-		previous = current;
-		current = next;
+		str1 += " " + to_string(p1->data);
+		p1 = p1->next;
 	}
-	head = previous;*/
+	command_history.push(str1);
 	if (head == NULL || head->next == NULL) {
 		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
 	}
@@ -230,8 +233,16 @@ void Reverse(node& head)
 
 
 //Sap xep danh sach theo thu tu tang dan
-void Sort(node& head)
+void Sort(node& head, string command, stack<string>& command_history)
 {
+	node p1 = head;
+	string str1 = "sort";
+	while (p1 != NULL)
+	{
+		str1 += " " + to_string(p1->data);
+		p1 = p1->next;
+	}
+	command_history.push(str1);
 	if (head == NULL || head->next == NULL) {
 		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
 	}
@@ -246,28 +257,6 @@ void Sort(node& head)
 				q->data = tmp;
 			}
 		}
-	}
-}
-
-//Xoa cac phan tu trung nhau trong danh sach
-void RemoveDuplicates(node& head)
-{
-	node i = head;
-	node j, q;
-	while (i != NULL && i->next != NULL)
-	{
-		j = i;
-		while (j->next != NULL)
-		{
-			if (i->data == j->next->data)
-			{
-				q = j->next;
-				j->next = j->next->next;
-				delete q;
-			}
-			else j = j->next;
-		}
-		i = i->next;
 	}
 }
 
@@ -293,27 +282,25 @@ void redo(node&head, node&tail, stack<string>& command_history, stack<string>& u
 
 // Hàm thực hiện lệnh
 void execute_command(string command, node&head, node&tail) {
+	stack<string>command_history;
     stringstream ss(command);
     string operation;
     ss >> operation;
     if (operation == "delete") {
         int pos;
         ss >> pos;
-		deleteAt(head, tail, pos-1);
+		deleteAt(head, tail, pos-1, command, command_history);
     } else if (operation == "insert") {
         int pos, val;
         ss >> pos >> val;
-		insertAt(head, tail, val, pos-1);
+		insertAt(head, tail, val, pos-1, command, command_history);
     } 
 	else if (operation == "sort") {
-		Sort(head);
+		Sort(head, command, command_history);
 	}
 	else if (operation == "reverse") {
 
-		Reverse(head);
-	}
-	else if (operation == "removeduplicates") {
-		RemoveDuplicates(head);
+		Reverse(head, command,command_history);
 	}
 	else {
         cout << "Invalid command.\n";
@@ -322,17 +309,18 @@ void execute_command(string command, node&head, node&tail) {
 
 // Hàm thực hiện lệnh đảo ngược
 void execute_reverse_command(string command, node&head, node&tail) {
+	stack<string>command_history;
     stringstream ss(command);
     string operation;
     ss >> operation;
     if (operation == "delete") {
         int pos, val;
         ss >> pos >> val;
-		insertAt(head, tail, val, pos-1);
+		insertAt(head, tail, val, pos-1, command, command_history);
     } else if (operation == "insert") {
         int pos;
         ss >> pos;
-		deleteAt(head, tail, pos-1);
+		deleteAt(head, tail, pos-1, command, command_history);
     }
 	else if (operation == "sort") {
 		node p = head;			
@@ -349,26 +337,6 @@ void execute_reverse_command(string command, node&head, node&tail) {
 			while (ss >> operation) {
 				p->data = stoi(operation);
 				p = p->next;
-			}
-		}
-	}
-	else if (operation == "removeduplicates") {
-		node p = head;
-		int count = 0;
-		while (p != NULL) {
-			while (ss >> operation) {
-				count++;
-				if (count > Size(head)) {
-					node tmp = makeNode(stoi(operation));
-					while (p->next != NULL) {
-						p = p->next;
-					}
-					p->next = tmp;
-				}
-				else {
-					p->data = stoi(operation);
-					p = p->next;
-				}
 			}
 		}
 	}

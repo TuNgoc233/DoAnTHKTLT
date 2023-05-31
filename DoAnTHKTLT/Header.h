@@ -34,17 +34,17 @@ void deleteLast(node& head, node& tail);
 //Xoa o giua
 void deleteMid(node& head, node q);
 //Xoa phan tu tai 1 vi tri xac dinh
-void deleteAt(node& head, node& tail, int pos);
+void deleteAt(node& head, node& tail, int pos,string command, stack<string>& command_history);
 //Them phan tu vao sau 1 phan tu nao do trong danh sach
 void insertAfter(node q, int k);
 //Them phan tu vao truoc mot phan tu nao do trong danh sach 
 void insertBefore(node q, int k);
 //Chen 1 node co gia tri x tai mot vi tri xac dinh trong danh sach
-void insertAt(node& head, node& tail, int x, int pos);
+void insertAt(node& head, node& tail, int x, int pos, string command, stack<string>& command_history);
 //Dao nguoc danh sach
-void Reverse(node& head);
+void Reverse(node& head, string command, stack<string>& command_history);
 //Sap xep danh sach theo thu tu tang dan
-void Sort(node& head);
+void Sort(node& head, string command, stack<string>& command_history);
 //Xoa cac phan tu trung nhau trong danh sach
 void RemoveDuplicates(node& head);
 //Luu danh sach vao file output.txt
