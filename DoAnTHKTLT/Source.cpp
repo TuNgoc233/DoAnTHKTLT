@@ -219,16 +219,18 @@ void Reverse(node& head, string command, stack<string>& command_history)
 	if (head == NULL || head->next == NULL) {
 		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
 	}
-	node p, q, prev_p = NULL;
 
-	// sap xep danh sach bang thuat toan sap xep 
-	for (p = head; p != NULL; p = p->next) {
-		for (q = p->next; q != NULL; prev_p = q, q = q->next) {
-			int tmp = p->data;
-			p->data = q->data;
-			q->data = tmp;
-		}
+	node previous = NULL;
+	node current = head;
+	node next = NULL;
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = previous;
+		previous = current;
+		current = next;
 	}
+	head = previous;
 } 
 
 
@@ -262,6 +264,8 @@ void Sort(node& head, string command, stack<string>& command_history)
 
 // Hàm thực hiện lệnh undo
 void undo(node&head, node&tail, stack<string>& command_history,stack<string>& undo_history) {
+	if (command_history.empty())
+		cout << "Can't undo!\n";
 	if (!command_history.empty()) {
 		string command = command_history.top(); // Lấy lệnh cuối cùng từ stack command_history
 		command_history.pop(); // Xóa lệnh đã lấy ra
@@ -272,6 +276,10 @@ void undo(node&head, node&tail, stack<string>& command_history,stack<string>& un
 
 // Hàm thực hiện lệnh redo
 void redo(node&head, node&tail, stack<string>& command_history, stack<string>& undo_history) {
+	if (undo_history.empty())
+	{
+		cout << "Can't redo!\n";
+	}
 	if (!undo_history.empty()) {
 		string command = undo_history.top(); // Lấy lệnh cuối cùng từ stack undo_history
 		undo_history.pop(); // Xóa lệnh đã lấy ra
@@ -371,6 +379,7 @@ void Reset(node& head, node& tail, stack<string>& command_history, stack<string>
 void Quit(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history)
 {
 	Save_List(head);
+	cout << "Numbers have been stored.\n";
 	DestroyList(head);
 	while (!command_history.empty())
 		command_history.pop();
