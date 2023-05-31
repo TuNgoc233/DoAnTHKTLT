@@ -198,9 +198,9 @@ void insertAt(node& head, node& tail, int x, int pos) {
 }
 
 //Dao nguoc danh sach
-void Reverse(node& head, node& tail)
+void Reverse(node& head)
 {
-	if (head == NULL) return;
+	/*if (head == NULL) return;
 	if (head == tail) return;
 	node previous = NULL;
 	node current = head;
@@ -212,8 +212,22 @@ void Reverse(node& head, node& tail)
 		previous = current;
 		current = next;
 	}
-	head = previous;
-}
+	head = previous;*/
+	if (head == NULL || head->next == NULL) {
+		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
+	}
+	node p, q, prev_p = NULL;
+
+	// sap xep danh sanh bang thuat toan sap xep 
+	for (p = head; p != NULL; p = p->next) {
+		for (q = p->next; q != NULL; prev_p = q, q = q->next) {
+			int tmp = p->data;
+			p->data = q->data;
+			q->data = tmp;
+		}
+	}
+} 
+
 
 //Sap xep danh sach theo thu tu tang dan
 void Sort(node& head)
@@ -292,7 +306,7 @@ void execute_command(string command, node&head, node&tail) {
 	}
 	else if (operation == "reverse") {
 
-		Reverse(head, tail);
+		Reverse(head);
 	}
 	else if (operation == "removeduplicates") {
 		RemoveDuplicates(head);
@@ -340,8 +354,17 @@ void execute_reverse_command(string command, node&head, node&tail) {
 		while (p != NULL) {
 			while (ss >> operation) {
 				count++;
-				p->data = stoi(operation);
-				p = p->next;
+				if (count > Size(head)) {
+					node tmp = makeNode(stoi(operation));
+					while (p->next != NULL) {
+						p = p->next;
+					}
+					p->next = tmp;
+				}
+				else {
+					p->data = stoi(operation);
+					p = p->next;
+				}
 			}
 		}
 	}

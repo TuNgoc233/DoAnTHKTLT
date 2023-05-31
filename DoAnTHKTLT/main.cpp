@@ -61,7 +61,7 @@ int main() {
 				p = p->next;
 			}
 			command_history.push(str1);
-			Reverse(phead,ptail);
+			Reverse(phead);
 			Output_List(phead);
 			/*p = phead;
 			string str2 = "reverse";

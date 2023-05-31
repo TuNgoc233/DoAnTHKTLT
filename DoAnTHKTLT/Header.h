@@ -42,7 +42,7 @@ void insertBefore(node q, int k);
 //Chen 1 node co gia tri x tai mot vi tri xac dinh trong danh sach
 void insertAt(node& head, node& tail, int x, int pos);
 //Dao nguoc danh sach
-void Reverse(node& head, node& tail);
+void Reverse(node& head);
 //Sap xep danh sach theo thu tu tang dan
 void Sort(node& head);
 //Xoa cac phan tu trung nhau trong danh sach
