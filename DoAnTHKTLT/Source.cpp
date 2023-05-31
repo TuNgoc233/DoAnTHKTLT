@@ -336,8 +336,10 @@ void execute_reverse_command(string command, node&head, node&tail) {
 	}
 	else if (operation == "removeduplicates") {
 		node p = head;
+		int count = 0;
 		while (p != NULL) {
 			while (ss >> operation) {
+				count++;
 				p->data = stoi(operation);
 				p = p->next;
 			}
