@@ -1,5 +1,6 @@
 ﻿#include "Header.h"
 
+
 //Khoi tao
 void Init(node& head, node& tail) {
 	head = tail = NULL;
@@ -285,7 +286,18 @@ void execute_command(string command, node&head, node&tail) {
         int pos, val;
         ss >> pos >> val;
 		insertAt(head, tail, val, pos-1);
-    } else {
+    } 
+	else if (operation == "sort") {
+		Sort(head);
+	}
+	else if (operation == "reverse") {
+
+		Reverse(head, tail);
+	}
+	else if (operation == "removeduplicates") {
+		RemoveDuplicates(head);
+	}
+	else {
         cout << "Invalid command.\n";
     }
 }
@@ -303,7 +315,38 @@ void execute_reverse_command(string command, node&head, node&tail) {
         int pos;
         ss >> pos;
 		deleteAt(head, tail, pos-1);
-    } else {
+    }
+	else if (operation == "sort") {
+		node p = head;			
+		while (p != NULL) {
+			while (ss >> operation) {
+				p->data = stoi(operation);
+				p = p->next;
+			}
+		}
+	}
+	else if (operation == "reverse") {
+		node p = head;
+		while (p != NULL) {
+			while (ss >> operation) {
+				p->data = stoi(operation);
+				p = p->next;
+			}
+		}
+	}
+	else if (operation == "removeduplicates") {
+		node p = head;
+		int count = 0;
+		while (p != NULL) {
+			while (ss >> operation) {
+				count++;
+				p->data = stoi(operation);
+				p = p->next;
+			}
+		}
+	}
+	else {
         cout << "Invalid command.\n";
     }
 } 
+

@@ -29,20 +29,58 @@ int main() {
 			int val = q->data;
 			string str = "delete " + to_string(x) + " " + to_string(val);
 			command_history.push(str);
-			undo_history.push(cmd);
 			deleteAt(phead, ptail, x-1);
 			Output_List(phead);
 		}
-
 		if(cmd=="sort") {
+			node p = phead;
+			string str1 = "sort";
+			while (p != NULL)
+			{
+				str1 += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str1);
+			//undo_history.push(str1);
 			Sort(phead);
 			Output_List(phead);
+			/*p = phead;
+			string str2 = "sort";
+			while (p != NULL)
+			{
+				str2 += " " + to_string(p->data);
+				p = p->next;
+			}*/
 		}
 		if(cmd=="reverse") {
+			node p = phead;
+			string str1 = "reverse";
+			while (p != NULL)
+			{
+				str1 += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str1);
 			Reverse(phead,ptail);
 			Output_List(phead);
+			/*p = phead;
+			string str2 = "reverse";
+			while (p != NULL)
+			{
+				str2 += " " + to_string(p->data);
+				p = p->next;
+			}
+			undo_history.push(str2);*/
 		}
 		if(cmd=="remove duplicates") {
+			node p = phead;
+			string str1 = "removeduplicates";
+			while (p != NULL)
+			{
+				str1 += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str1);
 			RemoveDuplicates(phead);
 			Output_List(phead);
 		}
@@ -75,9 +113,8 @@ int main() {
 			dodai2 = cmd.size() - 9;
 			string s2 = cmd.substr(9, dodai2);
 			int y = stoi(s2);
-			string s = "insert " + to_string(x);
+			string s = "insert " + to_string(x) + " " + to_string(y);
 			command_history.push(s);
-			undo_history.push(cmd);
 			insertAt(phead, ptail, y, x-1);
 			Output_List(phead);
 		}
@@ -96,34 +133,6 @@ int main() {
 			redo(phead, ptail, command_history, undo_history);
 			Output_List(phead);
 		}
-		/*int chose;
-		cin >> chose;
-		if (chose == 1) {
-			int pos;
-			cin >> pos;
-			deleteAt(phead, ptail, pos);
-			Output_List(phead);
-		}
-		else if (chose == 2) {
-			int pos, x;
-			cin >> pos;
-			cin >> x;
-			insertAt(phead, ptail, x, pos);
-			Output_List(phead);
-		}
-		if (chose == 3) {
-			Reverse(phead,ptail);
-			Output_List(phead);
-		}
-		if (chose == 4) {
-			Sort(phead);
-			Output_List(phead);
-		}
-		if (chose == 5) {
-			RemoveDuplicates(phead);
-			Output_List(phead);
-		}*/
-
 	}
 	return 0;
 }
