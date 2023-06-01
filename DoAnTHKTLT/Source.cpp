@@ -35,7 +35,7 @@ int Size(node head) {
 void Output_List(node head) {
 	node p = head;
 	if (p == NULL)
-		cout << "\nDanh sach bi rong\n";
+		cout << "\nEmpty list!\n";
 	cout << "LIST PROCESSING: ";
 	while (p != NULL)
 	{
@@ -61,7 +61,7 @@ void insertLast(node& head, node& tail, int x) {
 void ReadFile(node& head, node& tail) {
 	fstream input("input.txt", ios::in);
 	if (input.fail()) {
-		cout << "Doc input.txt khong thanh cong" << endl;
+		cout << "Failed to read file input.txt" << endl;
 		return;
 	}
 	head = NULL;
@@ -112,7 +112,7 @@ void deleteAt(node& head, node& tail, int pos) {
 	int n = 0;
 	n = Size(head);
 	if ((pos < 0) || (pos >= n)) {
-		cout << "Vi tri xoa khong phu hop\n";
+		cout << "Invalid deletion position.\n";
 		return;
 	}
 	if (pos == 0)
@@ -134,7 +134,7 @@ void Save_List(node head) {
 	fstream output;
 	output.open("output.txt", ios::out);
 	if (output.fail()) {
-		cout << "Mo output.txt khong thanh cong\n";
+		cout << "Failed to read file output.txt\n";
 		return;
 	}
 	node p = head;
@@ -178,7 +178,7 @@ void insertBefore(node q, int k) {
 void insertAt(node& head, node& tail, int x, int pos) {
 	int n = Size(head);
 	if (pos < 0 || pos > n) {
-		cout << "Vi tri chen khong hop le!" << endl;
+		cout << "Invalid insertion position!" << endl;
 		return;
 	}
 	if (pos == 0) {
@@ -201,7 +201,7 @@ void insertAt(node& head, node& tail, int x, int pos) {
 void Reverse(node& head)
 {
 	if (head == NULL || head->next == NULL) {
-		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
+		return; // danh sach rong hoac chi co 1 phan tu duy nhat
 	}
 
 	node previous = NULL;
