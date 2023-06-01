@@ -108,13 +108,7 @@ void deleteMid(node& head, node q) {
 }
 
 //Xoa phan tu tai 1 vi tri xac dinh
-void deleteAt(node& head, node& tail, int pos, string command, stack<string>& command_history) {
-	int i;
-	node q;
-	for (i = 1, q = head; i <= pos; i++, q = q->next);
-	int val = q->data;
-	string str = "delete " + to_string(pos+1) + " " + to_string(val);
-	command_history.push(str);
+void deleteAt(node& head, node& tail, int pos) {
 	int n = 0;
 	n = Size(head);
 	if ((pos < 0) || (pos >= n)) {
@@ -181,9 +175,7 @@ void insertBefore(node q, int k) {
 }
 
 //Chen 1 node co gia tri x tai mot vi tri xac dinh trong danh sach
-void insertAt(node& head, node& tail, int x, int pos, string command, stack<string>& command_history) {
-	string s = "insert " + to_string(pos+1) + " " + to_string(x);
-	command_history.push(s);
+void insertAt(node& head, node& tail, int x, int pos) {
 	int n = Size(head);
 	if (pos < 0 || pos > n) {
 		cout << "Vi tri chen khong hop le!" << endl;
@@ -206,16 +198,8 @@ void insertAt(node& head, node& tail, int x, int pos, string command, stack<stri
 }
 
 //Dao nguoc danh sach
-void Reverse(node& head, string command, stack<string>& command_history)
+void Reverse(node& head)
 {
-	node p1 = head;
-	string str1 = "reverse";
-	while (p1 != NULL)
-	{
-		str1 += " " + to_string(p1->data);
-		p1 = p1->next;
-	}
-	command_history.push(str1);
 	if (head == NULL || head->next == NULL) {
 		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
 	}
@@ -233,16 +217,8 @@ void Reverse(node& head, string command, stack<string>& command_history)
 
 
 //Sap xep danh sach theo thu tu tang dan
-void Sort(node& head, string command, stack<string>& command_history)
+void Sort(node& head)
 {
-	node p1 = head;
-	string str1 = "sort";
-	while (p1 != NULL)
-	{
-		str1 += " " + to_string(p1->data);
-		p1 = p1->next;
-	}
-	command_history.push(str1);
 	if (head == NULL || head->next == NULL) {
 		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
 	}
@@ -282,25 +258,24 @@ void redo(node&head, node&tail, stack<string>& command_history, stack<string>& u
 
 // Hàm thực hiện lệnh
 void execute_command(string command, node&head, node&tail) {
-	stack<string>command_history;
     stringstream ss(command);
     string operation;
     ss >> operation;
     if (operation == "delete") {
         int pos;
         ss >> pos;
-		deleteAt(head, tail, pos-1, command, command_history);
+		deleteAt(head, tail, pos-1);
     } else if (operation == "insert") {
         int pos, val;
         ss >> pos >> val;
-		insertAt(head, tail, val, pos-1, command, command_history);
+		insertAt(head, tail, val, pos-1);
     } 
 	else if (operation == "sort") {
-		Sort(head, command, command_history);
+		Sort(head);
 	}
 	else if (operation == "reverse") {
 
-		Reverse(head, command,command_history);
+		Reverse(head);
 	}
 	else {
         cout << "Invalid command.\n";
@@ -309,18 +284,17 @@ void execute_command(string command, node&head, node&tail) {
 
 // Hàm thực hiện lệnh đảo ngược
 void execute_reverse_command(string command, node&head, node&tail) {
-	stack<string>command_history;
     stringstream ss(command);
     string operation;
     ss >> operation;
     if (operation == "delete") {
         int pos, val;
         ss >> pos >> val;
-		insertAt(head, tail, val, pos-1, command, command_history);
+		insertAt(head, tail, val, pos-1);
     } else if (operation == "insert") {
         int pos;
         ss >> pos;
-		deleteAt(head, tail, pos-1, command, command_history);
+		deleteAt(head, tail, pos-1);
     }
 	else if (operation == "sort") {
 		node p = head;			
@@ -376,4 +350,119 @@ void Quit(node& head, node& tail, stack<string>& command_history, stack<string>&
 		command_history.pop();
 	while (!undo_history.empty())
 		undo_history.pop();
+}
+
+void Menu() {
+
+}
+
+//In ra lệnh command và xử lí
+void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_history) {
+	stack<string> undo_history;
+	Menu();
+	ReadFile(head, tail);
+	Output_List(head);
+	while (true) {
+		cout << "Command > ";
+		getline(cin, cmd);
+		while (cmd == "delete") {
+			cout << "command is *delete position*\n";
+			cout << "Command > ";
+			getline(cin, cmd);
+		}
+		if (cmd.substr(0, 6) == "delete") {
+			while (cmd.size() == 7) {
+				cout << "command is *delete position*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
+			string s1 = cmd.substr(7);
+			int x = stoi(s1);
+			int i;
+			node q;
+			for (i = 1, q = head; i < x; i++, q = q->next);
+			int val = q->data;
+			string str = "delete " + to_string(x) + " " + to_string(val);
+			command_history.push(str);
+			deleteAt(head, tail, x - 1);
+			Output_List(head);
+		}
+		if (cmd == "sort") {
+			node p1 = head;
+			string str1 = "sort";
+			while (p1 != NULL)
+			{
+				str1 += " " + to_string(p1->data);
+				p1 = p1->next;
+			}
+			command_history.push(str1);
+			Sort(head);
+			Output_List(head);
+		}
+		if (cmd == "reverse") {
+			node p1 = head;
+			string str1 = "reverse";
+			while (p1 != NULL)
+			{
+				str1 += " " + to_string(p1->data);
+				p1 = p1->next;
+			}
+			command_history.push(str1);
+			Reverse(head);
+			Output_List(head);
+		}
+		while (cmd == "insert") {
+			cout << "command is *insert position value*\n";
+			cout << "Command > ";
+			getline(cin, cmd);
+		}
+		if (cmd.substr(0, 6) == "insert") {
+			while (cmd.size() == 7) {
+				cout << "command is *insert position value*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
+			int dodai1 = 0;
+			for (int i = 7; i < cmd.length(); i++) {
+				if (cmd[i] == ' ') {
+					dodai1 = i - 7;
+					break;
+				}
+			}
+			while (cmd.size() == 7 + dodai1 + 1) {
+				cout << "command is *insert position value*\n";
+				cout << "Command > ";
+				getline(cin, cmd);
+			}
+			string s1 = cmd.substr(7, dodai1);
+			int x = stoi(s1);
+			int dodai2 = 0;
+			dodai2 = cmd.size() - 9;
+			string s2 = cmd.substr(9, dodai2);
+			int y = stoi(s2);
+			string s = "insert " + to_string(x) + " " + to_string(y);
+			command_history.push(s);
+			insertAt(head, tail, y, x - 1);
+			Output_List(head);
+		}
+		if (cmd == "save") {
+			Save_List(head);
+			cout << "Numbers have been stored." << endl;
+		}
+		if (cmd == "quit") {
+			Quit(head, tail, command_history, undo_history);
+			break;
+		}
+		if (cmd == "undo") {
+			undo(head, tail, command_history, undo_history);
+			Output_List(head);
+		}
+		if (cmd == "redo") {
+			redo(head, tail, command_history, undo_history);
+			Output_List(head);
+		}
+		if (cmd == "reset") {
+			Reset(head, tail, command_history, undo_history);
+		}
+	}
 }

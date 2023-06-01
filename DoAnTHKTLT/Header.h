@@ -34,19 +34,17 @@ void deleteLast(node& head, node& tail);
 //Xoa o giua
 void deleteMid(node& head, node q);
 //Xoa phan tu tai 1 vi tri xac dinh
-void deleteAt(node& head, node& tail, int pos,string command, stack<string>& command_history);
+void deleteAt(node& head, node& tail, int pos);
 //Them phan tu vao sau 1 phan tu nao do trong danh sach
 void insertAfter(node q, int k);
 //Them phan tu vao truoc mot phan tu nao do trong danh sach 
 void insertBefore(node q, int k);
 //Chen 1 node co gia tri x tai mot vi tri xac dinh trong danh sach
-void insertAt(node& head, node& tail, int x, int pos, string command, stack<string>& command_history);
+void insertAt(node& head, node& tail, int x, int pos);
 //Dao nguoc danh sach
-void Reverse(node& head, string command, stack<string>& command_history);
+void Reverse(node& head);
 //Sap xep danh sach theo thu tu tang dan
-void Sort(node& head, string command, stack<string>& command_history);
-//Xoa cac phan tu trung nhau trong danh sach
-void RemoveDuplicates(node& head);
+void Sort(node& head);
 //Luu danh sach vao file output.txt
 void Save_List(node head);
 // Hàm thực hiện lệnh redo
@@ -63,3 +61,7 @@ void DestroyList(node& head);
 void Reset(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history);
 // Hàm thực hiện lệnh quit
 void Quit(node& head, node& tail, stack<string>& command_history, stack<string>& undo_history);
+//In ra lệnh command và xử lí
+void Output_Command(node& head, node& tail, string& cmd, stack<string>& command_history);
+//In menu cho người dùng biết
+void Menu();
