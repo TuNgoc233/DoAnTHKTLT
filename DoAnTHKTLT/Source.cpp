@@ -361,10 +361,6 @@ void Quit(node& head, node& tail, stack<string>& command_history, stack<string>&
 		undo_history.pop();
 }
 
-void Menu() {
-
-}
-
 //In ra lệnh command và xử lí
 void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_history) {
 	stack<string> undo_history;
@@ -394,30 +390,6 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			string str = "delete " + to_string(x) + " " + to_string(val);
 			command_history.push(str);
 			deleteAt(head, tail, x - 1);
-			Output_List(head);
-		}
-		if (cmd == "sort") {
-			node p1 = head;
-			string str1 = "sort";
-			while (p1 != NULL)
-			{
-				str1 += " " + to_string(p1->data);
-				p1 = p1->next;
-			}
-			command_history.push(str1);
-			Sort(head);
-			Output_List(head);
-		}
-		if (cmd == "reverse") {
-			node p1 = head;
-			string str1 = "reverse";
-			while (p1 != NULL)
-			{
-				str1 += " " + to_string(p1->data);
-				p1 = p1->next;
-			}
-			command_history.push(str1);
-			Reverse(head);
 			Output_List(head);
 		}
 		while (cmd == "insert") {
@@ -454,24 +426,72 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			insertAt(head, tail, y, x - 1);
 			Output_List(head);
 		}
-		if (cmd == "save") {
+		if (cmd == "sort") {
+			node p1 = head;
+			string str1 = "sort";
+			while (p1 != NULL)
+			{
+				str1 += " " + to_string(p1->data);
+				p1 = p1->next;
+			}
+			command_history.push(str1);
+			Sort(head);
+			Output_List(head);
+		}
+		else if (cmd == "reverse") {
+			node p1 = head;
+			string str1 = "reverse";
+			while (p1 != NULL)
+			{
+				str1 += " " + to_string(p1->data);
+				p1 = p1->next;
+			}
+			command_history.push(str1);
+			Reverse(head);
+			Output_List(head);
+		}
+
+		else if (cmd == "save") {
 			Save_List(head);
 			cout << "Numbers have been stored." << endl;
 		}
-		if (cmd == "quit") {
+		else if (cmd == "quit") {
 			Quit(head, tail, command_history, undo_history);
 			break;
 		}
-		if (cmd == "undo") {
+		else if (cmd == "undo") {
 			undo(head, tail, command_history, undo_history);
 			Output_List(head);
 		}
-		if (cmd == "redo") {
+		else if (cmd == "redo") {
 			redo(head, tail, command_history, undo_history);
 			Output_List(head);
 		}
-		if (cmd == "reset") {
+		else if (cmd == "reset") {
 			Reset(head, tail, command_history, undo_history);
 		}
+		else
+		{
+			cout << "Command not found...\n";
+			Output_List(head);
+		}
 	}
+}
+
+void Menu()
+{
+	char ch;
+	cout << "Command:\n";
+	cout << " *delete pos*: Remove a node from position *pos* in the list.\n";
+	cout << " *insert val pos*: Insert a node with the value *val* at position *pos* in the list.\n";
+	cout << " *reverse*: Reverse the list.\n";
+	cout << " *sort*: Sort the list in ascending order.\n";
+	cout << " *undo*: Undo the most recent command.\n";
+	cout << " *redo*: Redo the most recently undone command.\n";
+	cout << " *save*: Save the current sequence of numbers in the list to the file output.txt.\n";
+	cout << " *reset*: Reset the working session.\n";
+	cout << " *quit*: Terminate the program.\n";
+	cout << "\nPress any key to continue...";
+	ch=_getch();
+	system("cls");
 }
