@@ -370,59 +370,54 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 	while (1) {
 		cout << "Command > ";
 		getline(cin, cmd);
+		stringstream ch(cmd);
 		stringstream ss(cmd);
 		string operation;
+		string check;
+		int count = 0;
+		while (ch >> check) {
+			count++;
+		}
 		ss >> operation;
 		if (operation == "delete") {
 			int pos, val;
 			ss >> pos;
-			int i;
-			node q;
-			for (i = 1, q = head; i < pos; i++, q = q->next);
-			val = q->data;
-			string str = "delete " + to_string(pos) + " " + to_string(val);
-			command_history.push(str);
-			deleteAt(head, tail, pos - 1);
-			Output_List(head);
+			if (count != 2) {
+				cout << "command is *delete position*\n";
+				/*cout << "Command > ";
+				getline(cin, cmd);*/
+			}
+			else {
+				int i;
+				node q;
+				if (pos < 0 || pos > Size(head)) {
+					cout << "Invalid insertion position!" << endl;
+				}
+				else {
+					for (i = 1, q = head; i < pos; i++, q = q->next);
+					val = q->data;
+					string str = "delete " + to_string(pos) + " " + to_string(val);
+					command_history.push(str);
+					deleteAt(head, tail, pos - 1);
+					Output_List(head);
+				}
+			}
 
 		}
 		else if (operation == "insert") {
 			int pos, val;
 			ss >> pos >> val;
-			/*while (cmd.size() == 7) {
-		while (cmd == "insert") {
-			cout << "command is *insert position value*\n";
-			cout << "Command > ";
-			getline(cin, cmd);
-		}
-		if (cmd.substr(0, 6) == "insert") {
-			while (cmd.size() == 7) {
+			if (count != 3) {
 				cout << "command is *insert position value*\n";
-				cout << "Command > ";
-				getline(cin, cmd);
+				/*cout << "Command > ";
+				getline(cin, cmd);*/
 			}
-			int dodai1 = 0;
-			for (int i = 7; i < cmd.length(); i++) {
-				if (cmd[i] == ' ') {
-					dodai1 = i - 7;
-					break;
-				}
+			else {
+				string s = "insert " + to_string(pos) + " " + to_string(val);
+				command_history.push(s);
+				insertAt(head, tail, val, pos - 1);
+				Output_List(head);
 			}
-			while (cmd.size() == 7 + dodai1 + 1) {
-				cout << "command is *insert position value*\n";
-				cout << "Command > ";
-				getline(cin, cmd);
-			}*/
-			//string s1 = cmd.substr(7, dodai1);
-			//int x = stoi(s1);
-			/*int dodai2 = 0;
-			dodai2 = cmd.size() - 9;
-			string s2 = cmd.substr(9, dodai2);
-			int y = stoi(s2);*/
-			string s = "insert " + to_string(pos) + " " + to_string(val);
-			command_history.push(s);
-			insertAt(head, tail, val, pos - 1);
-			Output_List(head);
 		}
 		else if (operation == "sort") {
 			node p = head;
@@ -448,63 +443,26 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			Reverse(head);
 			Output_List(head);
 		}
-		else if (operation == "undo") {
-			undo(head, tail, command_history, undo_history);
-			Output_List(head);
-		}
 		else if (operation == "save") {
-		if (cmd == "sort") {
-			node p1 = head;
-			string str1 = "sort";
-			while (p1 != NULL)
-			{
-				str1 += " " + to_string(p1->data);
-				p1 = p1->next;
-			}
-			command_history.push(str1);
-			Sort(head);
-			Output_List(head);
-		}
-		else if (cmd == "reverse") {
-			node p1 = head;
-			string str1 = "reverse";
-			while (p1 != NULL)
-			{
-				str1 += " " + to_string(p1->data);
-				p1 = p1->next;
-			}
-			command_history.push(str1);
-			Reverse(head);
-			Output_List(head);
-		}
-
-		else if (cmd == "save") {
 			Save_List(head);
 			cout << "Numbers have been stored." << endl;
 		}
 		else if (operation == "quit") {
-		else if (cmd == "quit") {
 			Quit(head, tail, command_history, undo_history);
 			break;
 		}
 		else if (operation == "reset") {
 			Reset(head, tail, command_history, undo_history);
-		else if (cmd == "undo") {
+		}
+		else if (operation == "undo") {
 			undo(head, tail, command_history, undo_history);
 			Output_List(head);
 		}
 		else if (operation == "redo") {
-		else if (cmd == "redo") {
 			redo(head, tail, command_history, undo_history);
 			Output_List(head);
 		}
 		else {
-
-		else if (cmd == "reset") {
-			Reset(head, tail, command_history, undo_history);
-		}
-		else
-		{
 			cout << "Command not found...\n";
 			Output_List(head);
 		}
