@@ -35,7 +35,7 @@ int Size(node head) {
 void Output_List(node head) {
 	node p = head;
 	if (p == NULL)
-		cout << "\nDanh sach bi rong\n";
+		cout << "\nEmpty list!\n";
 	cout << "LIST PROCESSING: ";
 	while (p != NULL)
 	{
@@ -61,7 +61,7 @@ void insertLast(node& head, node& tail, int x) {
 void ReadFile(node& head, node& tail) {
 	fstream input("input.txt", ios::in);
 	if (input.fail()) {
-		cout << "Doc input.txt khong thanh cong" << endl;
+		cout << "Failed to read file input.txt" << endl;
 		return;
 	}
 	head = NULL;
@@ -112,7 +112,7 @@ void deleteAt(node& head, node& tail, int pos) {
 	int n = 0;
 	n = Size(head);
 	if ((pos < 0) || (pos >= n)) {
-		cout << "Vi tri xoa khong phu hop\n";
+		cout << "Invalid deletion position.\n";
 		return;
 	}
 	if (pos == 0)
@@ -134,7 +134,7 @@ void Save_List(node head) {
 	fstream output;
 	output.open("output.txt", ios::out);
 	if (output.fail()) {
-		cout << "Mo output.txt khong thanh cong\n";
+		cout << "Failed to read file output.txt\n";
 		return;
 	}
 	node p = head;
@@ -178,7 +178,7 @@ void insertBefore(node q, int k) {
 void insertAt(node& head, node& tail, int x, int pos) {
 	int n = Size(head);
 	if (pos < 0 || pos > n) {
-		cout << "Vi tri chen khong hop le!" << endl;
+		cout << "Invalid insertion position!" << endl;
 		return;
 	}
 	if (pos == 0) {
@@ -201,7 +201,7 @@ void insertAt(node& head, node& tail, int x, int pos) {
 void Reverse(node& head)
 {
 	if (head == NULL || head->next == NULL) {
-		return; // danh sach da duoc sort san chi co 1 phan tu duy nhat
+		return; // danh sach rong hoac chi co 1 phan tu duy nhat
 	}
 
 	node previous = NULL;
@@ -361,10 +361,6 @@ void Quit(node& head, node& tail, stack<string>& command_history, stack<string>&
 		undo_history.pop();
 }
 
-void Menu() {
-
-}
-
 //In ra lệnh command và xử lí
 void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_history) {
 	stack<string> undo_history;
@@ -394,6 +390,13 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			int pos, val;
 			ss >> pos >> val;
 			/*while (cmd.size() == 7) {
+		while (cmd == "insert") {
+			cout << "command is *insert position value*\n";
+			cout << "Command > ";
+			getline(cin, cmd);
+		}
+		if (cmd.substr(0, 6) == "insert") {
+			while (cmd.size() == 7) {
 				cout << "command is *insert position value*\n";
 				cout << "Command > ";
 				getline(cin, cmd);
@@ -450,22 +453,78 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			Output_List(head);
 		}
 		else if (operation == "save") {
+		if (cmd == "sort") {
+			node p1 = head;
+			string str1 = "sort";
+			while (p1 != NULL)
+			{
+				str1 += " " + to_string(p1->data);
+				p1 = p1->next;
+			}
+			command_history.push(str1);
+			Sort(head);
+			Output_List(head);
+		}
+		else if (cmd == "reverse") {
+			node p1 = head;
+			string str1 = "reverse";
+			while (p1 != NULL)
+			{
+				str1 += " " + to_string(p1->data);
+				p1 = p1->next;
+			}
+			command_history.push(str1);
+			Reverse(head);
+			Output_List(head);
+		}
+
+		else if (cmd == "save") {
 			Save_List(head);
 			cout << "Numbers have been stored." << endl;
 		}
 		else if (operation == "quit") {
+		else if (cmd == "quit") {
 			Quit(head, tail, command_history, undo_history);
 			break;
 		}
 		else if (operation == "reset") {
 			Reset(head, tail, command_history, undo_history);
+		else if (cmd == "undo") {
+			undo(head, tail, command_history, undo_history);
+			Output_List(head);
 		}
 		else if (operation == "redo") {
+		else if (cmd == "redo") {
 			redo(head, tail, command_history, undo_history);
 			Output_List(head);
 		}
 		else {
 
+		else if (cmd == "reset") {
+			Reset(head, tail, command_history, undo_history);
+		}
+		else
+		{
+			cout << "Command not found...\n";
+			Output_List(head);
 		}
 	}
+}
+
+void Menu()
+{
+	char ch;
+	cout << "Command:\n";
+	cout << " *delete pos*: Remove a node from position *pos* in the list.\n";
+	cout << " *insert val pos*: Insert a node with the value *val* at position *pos* in the list.\n";
+	cout << " *reverse*: Reverse the list.\n";
+	cout << " *sort*: Sort the list in ascending order.\n";
+	cout << " *undo*: Undo the most recent command.\n";
+	cout << " *redo*: Redo the most recently undone command.\n";
+	cout << " *save*: Save the current sequence of numbers in the list to the file output.txt.\n";
+	cout << " *reset*: Reset the working session.\n";
+	cout << " *quit*: Terminate the program.\n";
+	cout << "\nPress any key to continue...";
+	ch=_getch();
+	system("cls");
 }
