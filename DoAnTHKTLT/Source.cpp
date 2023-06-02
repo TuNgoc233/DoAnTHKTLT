@@ -388,7 +388,7 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			else {
 				int i;
 				node q;
-				if (pos < 0 || pos > Size(head)) {
+				if (pos <= 0 || pos > Size(head)) {
 					cout << "Invalid deletion position!" << endl;
 				}
 				else {
@@ -409,7 +409,7 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 				cout << "Command is *insert position value*\n";
 			}
 			else {
-				if (pos < 0 || pos > Size(head)) {
+				if (pos <= 0 || pos > Size(head)) {
 					cout << "Invalid insertion position!" << endl;
 				}
 				else {
