@@ -371,62 +371,29 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 	Menu();
 	ReadFile(head, tail);
 	Output_List(head);
-	while (true) {
+	while (1) {
 		cout << "Command > ";
 		getline(cin, cmd);
-		while (cmd == "delete") {
-			cout << "command is *delete position*\n";
-			cout << "Command > ";
-			getline(cin, cmd);
-		}
-		if (cmd.substr(0, 6) == "delete") {
-			while (cmd.size() == 7) {
-				cout << "command is *delete position*\n";
-				cout << "Command > ";
-				getline(cin, cmd);
-			}
-			string s1 = cmd.substr(7);
-			int x = stoi(s1);
+		stringstream ss(cmd);
+		string operation;
+		ss >> operation;
+		if (operation == "delete") {
+			int pos, val;
+			ss >> pos;
 			int i;
 			node q;
-			for (i = 1, q = head; i < x; i++, q = q->next);
-			int val = q->data;
-			string str = "delete " + to_string(x) + " " + to_string(val);
+			for (i = 1, q = head; i < pos; i++, q = q->next);
+			val = q->data;
+			string str = "delete " + to_string(pos) + " " + to_string(val);
 			command_history.push(str);
-			deleteAt(head, tail, x - 1);
+			deleteAt(head, tail, pos - 1);
 			Output_List(head);
+
 		}
-		if (cmd == "sort") {
-			node p1 = head;
-			string str1 = "sort";
-			while (p1 != NULL)
-			{
-				str1 += " " + to_string(p1->data);
-				p1 = p1->next;
-			}
-			command_history.push(str1);
-			Sort(head);
-			Output_List(head);
-		}
-		if (cmd == "reverse") {
-			node p1 = head;
-			string str1 = "reverse";
-			while (p1 != NULL)
-			{
-				str1 += " " + to_string(p1->data);
-				p1 = p1->next;
-			}
-			command_history.push(str1);
-			Reverse(head);
-			Output_List(head);
-		}
-		while (cmd == "insert") {
-			cout << "command is *insert position value*\n";
-			cout << "Command > ";
-			getline(cin, cmd);
-		}
-		if (cmd.substr(0, 6) == "insert") {
-			while (cmd.size() == 7) {
+		else if (operation == "insert") {
+			int pos, val;
+			ss >> pos >> val;
+			/*while (cmd.size() == 7) {
 				cout << "command is *insert position value*\n";
 				cout << "Command > ";
 				getline(cin, cmd);
@@ -442,36 +409,41 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 				cout << "command is *insert position value*\n";
 				cout << "Command > ";
 				getline(cin, cmd);
-			}
-			string s1 = cmd.substr(7, dodai1);
-			int x = stoi(s1);
-			int dodai2 = 0;
+			}*/
+			//string s1 = cmd.substr(7, dodai1);
+			//int x = stoi(s1);
+			/*int dodai2 = 0;
 			dodai2 = cmd.size() - 9;
 			string s2 = cmd.substr(9, dodai2);
-			int y = stoi(s2);
-			string s = "insert " + to_string(x) + " " + to_string(y);
+			int y = stoi(s2);*/
+			string s = "insert " + to_string(pos) + " " + to_string(val);
 			command_history.push(s);
-			insertAt(head, tail, y, x - 1);
+			insertAt(head, tail, val, pos - 1);
 			Output_List(head);
 		}
-		if (cmd == "save") {
-			Save_List(head);
-			cout << "Numbers have been stored." << endl;
-		}
-		if (cmd == "quit") {
-			Quit(head, tail, command_history, undo_history);
-			break;
-		}
-		if (cmd == "undo") {
-			undo(head, tail, command_history, undo_history);
+		else if (operation == "sort") {
+			node p = head;
+			string str = "sort";
+			while (p != NULL)
+			{
+				str += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str);
+			Sort(head);
 			Output_List(head);
 		}
-		if (cmd == "redo") {
-			redo(head, tail, command_history, undo_history);
+		else if (operation == "reverse") {
+			node p = head;
+			string str = "reverse";
+			while (p != NULL)
+			{
+				str += " " + to_string(p->data);
+				p = p->next;
+			}
+			command_history.push(str);
+			Reverse(head);
 			Output_List(head);
-		}
-		if (cmd == "reset") {
-			Reset(head, tail, command_history, undo_history);
 		}
 	}
 }
