@@ -383,15 +383,13 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			int pos, val;
 			ss >> pos;
 			if (count != 2) {
-				cout << "command is *delete position*\n";
-				/*cout << "Command > ";
-				getline(cin, cmd);*/
+				cout << "Command is *delete position*\n";
 			}
 			else {
 				int i;
 				node q;
 				if (pos < 0 || pos > Size(head)) {
-					cout << "Invalid insertion position!" << endl;
+					cout << "Invalid deletion position!" << endl;
 				}
 				else {
 					for (i = 1, q = head; i < pos; i++, q = q->next);
@@ -408,15 +406,18 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			int pos, val;
 			ss >> pos >> val;
 			if (count != 3) {
-				cout << "command is *insert position value*\n";
-				/*cout << "Command > ";
-				getline(cin, cmd);*/
+				cout << "Command is *insert position value*\n";
 			}
 			else {
-				string s = "insert " + to_string(pos) + " " + to_string(val);
-				command_history.push(s);
-				insertAt(head, tail, val, pos - 1);
-				Output_List(head);
+				if (pos < 0 || pos > Size(head)) {
+					cout << "Invalid insertion position!" << endl;
+				}
+				else {
+					string s = "insert " + to_string(pos) + " " + to_string(val);
+					command_history.push(s);
+					insertAt(head, tail, val, pos - 1);
+					Output_List(head);
+				}
 			}
 		}
 		else if (operation == "sort") {
