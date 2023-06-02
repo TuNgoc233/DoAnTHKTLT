@@ -445,5 +445,27 @@ void Output_Command(node &head, node &tail, string&cmd, stack<string>& command_h
 			Reverse(head);
 			Output_List(head);
 		}
+		else if (operation == "undo") {
+			undo(head, tail, command_history, undo_history);
+			Output_List(head);
+		}
+		else if (operation == "save") {
+			Save_List(head);
+			cout << "Numbers have been stored." << endl;
+		}
+		else if (operation == "quit") {
+			Quit(head, tail, command_history, undo_history);
+			break;
+		}
+		else if (operation == "reset") {
+			Reset(head, tail, command_history, undo_history);
+		}
+		else if (operation == "redo") {
+			redo(head, tail, command_history, undo_history);
+			Output_List(head);
+		}
+		else {
+
+		}
 	}
 }
